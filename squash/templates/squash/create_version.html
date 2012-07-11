@@ -1,0 +1,36 @@
+{% extends "squash/base.html" %}
+{% block content %}
+
+<span><b>Create new Version:</b></span><br/><br/>
+
+{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+
+<form action="/squash/newVersion/{{project.key}}/create/" method="post">
+{% csrf_token %}
+
+<!-- List the projects //-->
+<table>
+    <tr>
+        <td>
+            Version Number:
+        </td>
+        <td>
+            <input type="text" name="version_number" style="width: 300px;"/>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            Description:
+        </td>
+        <td>
+            <textarea name="version_description" style="width: 300px; height: 180px;"></textarea>
+        </td>
+    </tr>
+</table>
+
+<br/>
+<a href="/squash/project/{{ project.key }}/" class="input_war">No, Cancel</a>
+<input type="submit" class="input" value="Create New Version"/>
+</form>
+
+{% endblock %}

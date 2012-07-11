@@ -1,0 +1,31 @@
+{% extends "squash/base.html" %}
+{% block content %}
+{% if project %}
+    <b><a href="/squash/projects/">Projects</a> -> <a href="/squash/project/{{project.key}}">{{ project.name }}</a></b><br/><br/>
+    {% if project.version_set.count > 0 %}
+        {% for version in project.version_set.all %}
+            {% include "squash/piece_project_version_issues.html" %}
+        {% endfor %}
+        {% with version=None %}
+            {% include "squash/piece_project_version_issues.html" %}
+        {% endwith %}       
+    {% else %}
+        <i>This project has no versions</i>
+    {% endif %}
+
+    <table>
+        <tr>
+            <td>
+                <a href="/squash/newVersion/{{ project.key }}" class="input">Create new Version</a>
+            </td>
+            <td>
+                <a href="/squash/newIssue/{{ project.key }}" class="input">Create new Issue</a>
+            </td>
+            <td>
+                <a href="/squash/confirmDeleteProject/{{ project.key }}" class="input_err">Delete This Project</a>
+            </td>
+        </tr>
+    </table>
+    
+{% endif %}
+{% endblock %}

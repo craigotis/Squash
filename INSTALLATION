@@ -1,0 +1,64 @@
+### Squash Installation - version 0.6.0 ###
+
+1) Install python (2.7.x preferred)
+
+1.1) OPTIONAL: Install easy_install, making it super easy to install modules (http://pypi.python.org/pypi/setuptools)
+
+1.2) Install South
+
+     > easy_install South
+
+     Or their releases: http://south.aeracode.org/docs/installation.html
+
+1.3) Install simplejson using easy_install:
+
+     > easy_install simplejson
+     
+     Or their releases: http://pypi.python.org/pypi/simplejson/
+
+2) Obtain a copy of Squash! (If you're reading this, you probably already have it.)
+
+3)  Install Squash into a web container. If you just want to test things out, you only
+    have you move into the Squash directory:
+    
+    > cd squash-x.x.x/
+    
+    Then run the simple server:
+    
+    > ./manage.py runserver
+    
+    And it should just work! There's an administrative account configured with username
+    'admin' and password 'admin'.
+    
+    Note however that this will run against (by default) a lightweight SQLite database
+    that should NOT be used in production. It should only be used for tinkering.
+    
+4)  When/if you want to move Squash into a production environment, you'll want a better
+    database, and a better container. I personally use MySQL and Apache/mod_python, so
+    installation details for this method are below.
+
+5)  Install Apache and mod_python, or whatever production environment you prefer.
+
+    (Additional details at: http://www.djangobook.com/en/beta/chapter21/)
+
+    For this example, I'll be using Apache 2.4.2 with APR 1.4.6
+
+    > wget http://mirror.symnds.com/software/Apache/httpd/httpd-2.4.2.tar.gz
+    
+    > tar xvf httpd-2.4.2.tar.gz
+    > cd httpd-2.4.2/srclib/
+    
+    > wget http://mirrors.axint.net/apache//apr/apr-1.4.6.tar.gz 
+    > tar xvf apr-1.4.6.tar.gz
+    > mv apr-1.4.6/ apr/
+    
+    > wget http://download.nextag.com/apache/apr/apr-util-1.4.1.tar.gz
+    > tar xvf apr-util-1.4.1.tar.gz
+    > mv apr-util-1.4.1/ apr-util/
+    
+    > cd ..
+    
+    > ./configure --with-included-apr --with-included-apr-util
+    > make
+    > make install
+    

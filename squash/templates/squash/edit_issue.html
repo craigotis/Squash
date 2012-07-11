@@ -1,0 +1,72 @@
+{% extends "squash/base.html" %}
+{% block content %}
+
+<span><b>Edit Issue:</b></span><br/><br/>
+
+{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+
+<form id="editIssueForm" action="/squash/editIssue/save/" method="post">
+{% csrf_token %}
+
+<input type="hidden" name="project_key" value="{{ issue.project.key }}"/>
+<input type="hidden" name="issue_number" value="{{ issue.issue_number }}"/>
+
+<!-- List the projects //-->
+<table>
+    <tr>
+        <td>
+            Project:
+        </td>
+        <td>
+            {{ issue.project.name }}
+        </td>
+    </tr>
+    <tr>
+        <td>
+            Version:
+        </td>
+        <td>
+            {{ issue.fix_version.version_number }}
+        </td>
+    </tr>
+    <tr>
+        <td>
+            Name:
+        </td>
+        <td>
+            <input type="text" id="issue_name" name="issue_name" value="{{ issue.name }}" style="width: 300px;"/>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            Description:
+        </td>
+        <td>
+            <textarea name="issue_description" style="width: 300px; height: 180px;">{{ issue.description }}</textarea>
+        </td>
+    </tr>
+</table>
+
+<br/>
+    <input type="button" value="Cancel" onclick="javascript:history.back();" class="input_war"/>
+    <input type="button" class="input" value="Save Changes" onclick="javascript:checkSubmit(); return true;"/>
+</form>
+
+<script>
+
+function checkSubmit() {
+    var good = true;
+    var issueNameInput = document.getElementById('issue_name');
+    if (isEmpty(issueNameInput.value)) {
+        issueNameInput.style.border = "2px solid #f00";
+        good = false;
+    }
+    
+    if (good) {
+        document.forms['editIssueForm'].submit();
+    }
+}
+
+</script>
+
+{% endblock %}

@@ -1,0 +1,108 @@
+{% extends "squash/base.html" %}
+{% block content %}
+
+<span><b>Create new Issue:</b></span><br/><br/>
+
+{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+
+{% if not projects_list %}
+    <p><strong>There are no Projects available - please <a href="#">create a Project</a> first.</strong></p>
+{% else %}
+    <form id="newIssueForm" action="/squash/newIssue/create/" method="post">
+    {% csrf_token %}
+    
+    <!-- List the projects //-->
+    <table>
+        <tr>
+            <td>
+                Project:
+            </td>
+            <td>
+                <select name="project" id="project_select">
+                {% for project in projects_list %}
+                    <option value="{{ project.key }}" {% if current_project and project.key == current_project.key %}selected {% endif %}>{{project.name}}</option>
+                {% endfor %}
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Version:
+            </td>
+            <td>
+                <select name="version" id="version_select">
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Name:
+            </td>
+            <td>
+                <input type="text" id="issue_name" name="issue_name" style="width: 300px;"/>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Description:
+            </td>
+            <td>
+                <textarea name="issue_description" style="width: 300px; height: 180px;"></textarea>
+            </td>
+        </tr>
+    </table>
+    
+    <br/>
+        <input type="button" value="Cancel" onclick="javascript:history.back();" class="input_war"/>
+        <input type="button" class="input" value="Create Issue" onclick="javascript:checkSubmit(); return true;"/>
+    </form>
+    
+    <script>
+    
+    $(document).ready(function() {load_versions_func();});
+    
+    $("select#project_select").change(function() {load_versions_func();});
+    
+    function load_versions_func() {
+        var project_select = document.getElementById('project_select');
+        var project = project_select.value;
+        
+        $.getJSON("/squash/get_project_versions/" + project + "/", function(result) {
+            $('#version_select').find('option').remove().end()
+            $.each(result, function(version_num) {
+                $("#version_select").append($("<option />").text(result[version_num]));        
+            });
+            $("#version_select").append($("<option />").text("Future"));
+        });
+    };
+    
+    function checkSubmit() {
+        var projectSelect = document.getElementById('project_select');
+        var good = true;
+        if (isEmpty(projectSelect.value)) {
+            projectSelect.style.border = "2px solid #f00";
+            good = false;
+        }
+        
+        var versionSelect = document.getElementById('version_select');
+        if (isEmpty(versionSelect.value)) {
+            versionSelect.style.border = "2px solid #f00";
+            good = false;
+        }
+        
+        var issueNameInput = document.getElementById('issue_name');
+        if (isEmpty(issueNameInput.value)) {
+            issueNameInput.style.border = "2px solid #f00";
+            good = false;
+        }
+        
+        if (good) {
+            document.forms['newIssueForm'].submit();
+        }
+    }
+    
+    </script>
+
+{% endif %}
+
+{% endblock %}

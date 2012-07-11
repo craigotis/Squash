@@ -1,0 +1,246 @@
+body,
+html {
+    margin: 0;
+    padding: 0;
+    color: #000;
+    font-family: 'PT Sans', sans-serif;
+    height: 100%;
+}
+
+a {
+    color: #222;
+}
+
+.success {
+    border: 1px solid #588F27;
+    background-color: #67A82D;
+    color: #fff;
+    padding: 7px;
+    margin: 5px;
+}
+
+.error {
+    border: 1px solid #66120F;
+    background-color: #AD2924;
+    color: #fff;
+    padding: 7px;
+    margin: 5px;
+}
+
+.green-bold {
+    font-style: bold;
+    color: #67A82D;
+}
+
+.red-bold {
+    font-style: bold;
+    color: #AD2924;
+}
+
+#maintable {
+    border: 0;
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    border-spacing: 0px;
+    background-color: #f2f2f2;
+}
+
+#lefttd {
+    width: 250px;
+    margin: 0;
+    padding: 0px 0px 0px 0px;
+    height: 100%;
+    background-image: url('image/grad_shad.png');
+    background-repeat: repeat-y;
+    background-position: right top;
+    vertical-align: top;
+}
+
+#righttd {
+    margin: 0;
+    height: 100%;
+    padding: 0;
+}
+
+#header {
+    margin-bottom: 50px;
+}
+
+#header p {
+    text-align: center;
+    width: 100%;
+    margin: 0 auto;
+    color: #676767;
+}
+
+#logotext {
+    font-size: 2.5em;
+}
+
+#logosubtext {
+    font-size: 0.8em;
+}
+
+#header ul {
+}
+
+#header li {
+}
+
+#header li a {
+    color: #000;
+}
+
+h1 {
+    margin:0;
+}
+
+#nav {
+    background: #4E8DA6;
+    margin: 0 auto;
+    border-bottom-image: url('image/grad_shad_h.png');
+}
+
+#nav ul {
+    margin:0;
+    padding:0;
+    border-top: 1px solid #2A4C59;
+}
+
+#nav li {
+    padding: 2px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    text-indent: 10px;
+    border-top: 1px solid #7FA9BA;
+    border-bottom: 1px solid #2A4C59;
+}
+
+#nav li a {
+    text-decoration: none;
+    font-size: .8em;
+    color: #fff;
+}
+
+#nav li a:hover {
+    text-decoration: underline;
+}
+
+#actionbar {
+
+}
+
+#main {
+    padding: 10px;
+    background: #fff;
+    height: 100%;
+}
+
+h2 {
+    margin:0 0 1em;
+}
+
+/* buttons */
+
+a.input {
+    padding-bottom: 4px;
+}
+
+a.input_war {
+    padding-bottom: 4px;
+}
+
+.input {
+    background-color: #6AA690;
+    border: 1px solid #006;
+    color: #fff;
+    cursor: pointer;
+    text-decoration: none;
+    font-size: 12px;
+    padding: 3px;
+    font-family: 'PT Sans', sans-serif;
+}
+
+.input:hover {
+    background-color: #3B6E5A;
+}
+
+.input_war {
+    background-color: #F07748;
+    border: 1px solid #006;
+    color: #fff;
+    cursor: pointer;
+    text-decoration: none;
+    font-size: 12px;
+    padding: 3px;
+    font-family: 'PT Sans', sans-serif;
+}
+
+.input_war:hover {
+    background-color: #DB6537;
+}
+
+.input_err {
+    background-color: #CD4944;
+    border: 1px solid #006;
+    color: #fff;
+    cursor: pointer;
+    text-decoration: none;
+    font-size: 12px;
+    padding: 3px;
+    font-family: 'PT Sans', sans-serif;
+}
+
+.input_err:hover {
+    background-color: #AD2924;
+}
+
+/* piece_project_version_issues */
+
+.styled-table {
+    border: 1px solid #444;
+    width: 90%;
+    margin: 5px auto 30px auto;
+    border-spacing: 0px;
+    text-align: center;
+    background-color: #ddd;
+}
+
+.styled-table a {
+}
+
+.styled-table th a {
+   color: #000;
+}
+
+.styled-table tr {
+    border-bottom: 1px solid #444;
+}
+
+.styled-table tr.header {
+    border-bottom: 1px solid #444;
+    background-color: #F2BC1B;
+}
+
+.styled-table tr.header_success {
+    border-bottom: 1px solid #444;
+    background-color: #83A603;
+}
+
+.styled-table tr.light {
+    background-color: #F2DC82;
+}
+
+.styled-table tr.odd {
+    background-color: #fff;
+}
+
+.styled-table tr.even {
+    background-color: #eee;
+}
+
+.styled-table tr.gray {
+    background-color: #dedede;
+}

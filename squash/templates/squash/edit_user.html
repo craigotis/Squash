@@ -1,0 +1,44 @@
+{% extends "squash/base.html" %}
+{% block content %}
+
+{% load squash_extras %}
+
+<b><a href="/squash/users/">Users</a> -> <a href="/squash/user/{{user_to_edit.username}}">{{ user_to_edit.username }}</a></b><br/><br/>
+
+<form action="/squash/saveUserPerms/{{ user_to_edit.username }}" method="POST">
+{% csrf_token %}
+
+<table>
+    <tr>
+        <td><b>Can Browse:</b></td>
+        <td><input type="checkbox" name="perm_can_browse" value="booga" {% if user_to_edit|user_has_perm:'squash.can_browse' %} checked {% endif %} /></td>
+    </tr>
+    <tr>
+        <td><b>Create Issues:</b></td>
+        <td><input type="checkbox" name="perm_add_issue" value="booga" {% if user_to_edit|user_has_perm:'squash.add_issue' %} checked {% endif %} /></td>
+    </tr>
+    <tr>
+        <td><b>Edit Issues:</b></td>
+        <td><input type="checkbox" name="perm_change_issue" value="booga" {% if user_to_edit|user_has_perm:'squash.change_issue' %} checked {% endif %} /></td>
+    </tr>
+    <tr>
+        <td><b>Delete Issues:</b></td>
+        <td><input type="checkbox" name="perm_delete_issue" value="booga" {% if user_to_edit|user_has_perm:'squash.delete_issue' %} checked {% endif %} /></td>
+    </tr>
+</table>
+
+{% if request.session.success|is_not_None %}
+    {% if request.session.success %}
+        <div class="success" style="width: 300px;">Changes saved</div>
+    {% else %}
+        <div class="error" style="width: 300px;">Changes not saved, error</div>
+    {% endif %}
+    {{ request|delete_session_var:'success' }}
+{% endif %}
+
+<a href="/squash/users/" class="input_war">Cancel</a>
+<input type="submit" class="input" value="Save Permissions"/>
+
+</form>
+
+{% endblock %}

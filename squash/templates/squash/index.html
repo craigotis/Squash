@@ -1,0 +1,13 @@
+{% extends "squash/base.html" %}
+{% block content %}
+<b>Upcoming versions of all projects:</b><br/><br/>
+{% if projects_list %}
+    {% for project in projects_list %}
+        {% with version=project.most_recent_version %}
+        {% include "squash/piece_project_version_issues.html" %}
+        {% endwith %}
+    {% endfor %}
+{% else %}
+    <p>No projects are available.</p>
+{% endif %}
+{% endblock %}

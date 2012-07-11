@@ -1,0 +1,35 @@
+{% extends "squash/base.html" %}
+{% block content %}
+
+<span><b>Create new Project:</b></span><br/><br/>
+
+{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+
+<form action="/squash/newProject/create/" method="post">
+{% csrf_token %}
+
+<!-- List the projects //-->
+<table>
+    <tr>
+        <td>
+            Name:
+        </td>
+        <td>
+            <input type="text" name="project_name" style="width: 300px;"/>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            Key:
+        </td>
+        <td>
+            <input type="text" name="project_key" style="width: 300px;"/>
+        </td>
+    </tr>
+</table>
+
+<br/>
+<input type="submit" value="Create New Project"/>
+</form>
+
+{% endblock %}

@@ -1,0 +1,20 @@
+#################
+Required Modules:
+
+simplejson
+South
+
+#################
+Permissions:
+
+(Defined on Project)
+squash.can_admin (can perform administrative tasks like creating Projects, adding Users, etc.)
+squash.can_browse (read-only mode, available to all users)
+
+(Automatic on Issue)
+squash.add_issue (create individual Issues)
+squash.change_issue (can edit existing Issues)
+squash.delete_issue (can delete existing Issues)
+
+^ Same permissions as above for Issue apply to Version and Project
+

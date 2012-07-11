@@ -1,0 +1,30 @@
+{% extends "squash/base.html" %}
+{% block content %}
+
+<b><a href="/squash/projects/">Projects</a> -> <a href="/squash/project/{{project.key}}">{{ project.name }}</a> ->
+{% if version %}
+    <a href="/squash/project/{{project.key}}/{{version.version_number}}">{{ version.version_number }}</a>
+{% else %}
+    <a href="/squash/project/{{project.key}}/Future">Future</a>
+{% endif %}
+</b><br/><br/>
+
+{% if project %}
+    {% include "squash/piece_project_version_issues.html" %}
+{% endif %}
+
+<table>
+    <tr>
+        <td>
+            <a href="/squash/newIssue/{{ project.key }}" class="input">Create Issue</a>
+        </td>
+        <td>
+            <a href="/squash/releaseVersion/{{ project.key }}/{{ version.version_number }}" class="input">Release This Version</a>
+        </td>
+        <td>
+            <a href="/squash/confirmDeleteVersion/{{ project.key }}/{{ version.version_number }}" class="input_err">Delete This Version</a>
+        </td>
+    </tr>
+</table>
+
+{% endblock %}

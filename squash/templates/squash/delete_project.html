@@ -1,0 +1,25 @@
+{% extends "squash/base.html" %}
+{% block content %}
+
+{% if success %}
+
+Deletion successful
+
+<a href="/squash/" class="input">Home</a>
+
+{% else %}
+
+<div class="error" style="width: 300px;">Warning! All Versions and Issues for this Project will also be deleted!</div>
+
+<form action="/squash/deleteProject/{{ project.key }}/" method="POST">
+{% csrf_token %}
+
+<a href="/squash/project/{{ project.key }}/" class="input">No, Cancel</a>
+
+<input type="submit" class="input" value="Delete This Project"/>
+
+</form>
+
+{% endif %}
+
+{% endblock %}

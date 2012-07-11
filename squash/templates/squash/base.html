@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link href='http://fonts.googleapis.com/css?family=PT+Sans' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="{{ STATIC_URL }}/style.css" />
+    <script type="text/javascript" src="{{ STATIC_URL }}/squash.js"></script>  
+    <script type="text/javascript" src="{{ STATIC_URL }}/jquery-1.7.2.min.js"></script>
+    <title>{% block title %}Squash{% endblock %}</title>
+</head>
+
+<body>
+<table id="maintable">
+    <tr>
+        <td id="lefttd">
+            <div id="header">
+                <p id="logotext">Squash</p><p id="logosubtext">all the bugs!</p><br/>
+                <ul>
+                    {% if not user.is_anonymous %}
+                        <li>{{ user.username }}</li>
+                        <li><a href="/squash/logout/">Logout</a></li>
+                    {% else %}
+                        <li><a href="/squash/login/">Login</a></li>
+                    {% endif %}
+                </ul>
+            </div>
+            <div id="nav">
+                <ul>
+                    <li><a href="/squash/">Home</a></li>
+                    <li><a href="/squash/projects/">Projects</a></li>
+                    {% if project %}
+                        <li><a href="/squash/newIssue/{{ project.key }}">Create Issue</a></li>
+                    {% else %}
+                        <li><a href="/squash/newIssue/">Create Issue</a></li>
+                    {% endif %}
+                    <li><a href="/squash/users/">Users</a></li>
+                    <li><a href="#">Admin</a></li>
+                </ul>
+            </div>
+        </td>
+        <td id="righttd">
+            <div id="main">
+                    {% block content %}{% endblock %}
+            </div>
+        </td>
+    </tr>
+</table>
+</body>
+</html>

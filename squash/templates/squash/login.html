@@ -1,0 +1,36 @@
+{% extends "squash/base.html" %}
+{% block content %}
+
+{% if state %}
+<div style="text-align: center; margin-left: auto; margin-right: auto;">{{ state }}</div>
+{% endif %}
+	<form action="/squash/login/" method="post">
+	    {% csrf_token %}
+	    
+	    {% if next %}
+		    <input type="hidden" name="next" value="{{ next }}" />
+		{% endif %}
+	    
+	    <table class="styled-table" style="width: 400px;">
+	        
+	        <tr class="light">
+                <th colspan=2>Login:</th>
+            </tr>
+	    
+            <tr>
+                <td>Username:</td>
+                <td><input type="text" name="username" value="{{ username}}" /></td>
+            </tr>
+            
+            <tr>
+                <td>Password:</td>
+                <td><input type="password" name="password" value="" /></td>
+            </tr>
+            
+            <tr>
+                <td colspan=2><input type="submit" value="Log In" /></td>
+            </tr>
+		</table>
+	</form>
+
+{% endblock %}

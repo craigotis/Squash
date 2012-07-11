@@ -1,0 +1,39 @@
+{% extends "squash/base.html" %}
+{% block content %}
+
+{% load squash_extras %}
+
+{% if users %}
+    <table class="styled-table">
+        <tr class="light">
+            <th>Username</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Created</th>
+            <th>Admin</th>
+            <th>Root</th>
+            <th>Browse</th>
+            <th>New Issue</th>
+            <th>Edit Issue</th>
+            <th>Delete Issue</th>
+        </tr>
+    {% for user in users %}
+        <tr class="{% cycle 'odd' 'even' %}">
+            <td><a href="/squash/user/{{ user.username }}">{{ user.username }}</a></td>
+            <td>{{ user.first_name }} {{ user.last_name }}</td>
+            <td>{{ user.email }}</td>
+            <td>{{ user.get_profile.created_at }}</td>
+            {{ user.is_staff|td_for_bool|safe }}
+            {{ user.is_superuser|td_for_bool|safe }}
+            {{ user|td_for_perm:'squash.can_browse'|safe }}
+            {{ user|td_for_perm:'squash.add_issue'|safe }}
+            {{ user|td_for_perm:'squash.change_issue'|safe }}
+            {{ user|td_for_perm:'squash.delete_issue'|safe }}
+        </tr>
+    {% endfor %}
+    </table>
+{% else %}
+    <i>No users</i>
+{% endif %}
+
+{% endblock %}
