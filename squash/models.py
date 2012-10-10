@@ -47,6 +47,11 @@ class Project(models.Model):
         else:
             return None
 
+    def sorted_versions(self):
+        all_versions = [v for v in self.version_set.all()]
+        all_versions.sort(key=lambda version: StrictVersion(version.version_number))
+        return all_versions
+
     def sorted_version_numbers(self):
         versions = [v.version_number for v in self.version_set.all()]
         versions.sort(key=StrictVersion)

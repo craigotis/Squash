@@ -162,19 +162,28 @@ def project_version(request, project_key, version_num='Future'):
 def save_issue(request):
     project_key = request.POST['project_key']
     issue_num = request.POST['issue_number']
+    version_number = request.POST['issue_version']
     try:
         proj = Project.objects.get(key=project_key)
     except Project.DoesNotExist:
         raise Http404
-        
+    
     try:
         issue = Issue.objects.get(project=proj, issue_number=issue_num)
     except Issue.DoesNotExist:
         raise Http404
     
+    version = None
+    if version_number != 'Future':
+        try:
+            version = Version.objects.get(project=proj, version_number = version_number)
+        except Issue.DoesNotExist:
+            raise Http404
+    
     issue_new_name = request.POST['issue_name']
     issue_new_description = request.POST['issue_description']
     issue.name = issue_new_name
+    issue.fix_version = version
     issue.description = issue_new_description
     issue.save()
     

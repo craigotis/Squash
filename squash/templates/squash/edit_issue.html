@@ -26,7 +26,8 @@
             Version:
         </td>
         <td>
-            {{ issue.fix_version.version_number }}
+            <select name="issue_version" id="issue_version_select">
+            </select>
         </td>
     </tr>
     <tr>
@@ -53,6 +54,22 @@
 </form>
 
 <script>
+
+$(function() {
+    var select = $('#issue_version_select');
+    var project = '{{ issue.project.key }}';
+    $.getJSON("/squash/get_project_versions/" + project + "/", function(result) {
+            select.find('option').remove()
+            $.each(result, function(version_num) {
+                var option = $("<option />").text(result[version_num]);
+                if (option.text() === '{{ issue.fix_version.version_number }}') {
+                    option.attr('selected', 'selected');
+                }
+                select.append(option);
+            });
+            select.append($("<option />").text("Future"));
+        });
+});
 
 function checkSubmit() {
     var good = true;

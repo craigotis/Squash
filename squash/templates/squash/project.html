@@ -2,8 +2,8 @@
 {% block content %}
 {% if project %}
     <b><a href="/squash/projects/">Projects</a> -> <a href="/squash/project/{{project.key}}">{{ project.name }}</a></b><br/><br/>
-    {% if project.version_set.count > 0 %}
-        {% for version in project.version_set.all %}
+    {% if project.sorted_versions > 0 %}
+        {% for version in project.sorted_versions %}
             {% include "squash/piece_project_version_issues.html" %}
         {% endfor %}
         {% with version=None %}
