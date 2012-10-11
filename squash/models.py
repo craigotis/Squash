@@ -56,6 +56,11 @@ class Project(models.Model):
         versions = [v.version_number for v in self.version_set.all()]
         versions.sort(key=StrictVersion)
         return versions
+        
+    def sorted_unreleased_version_numbers(self):
+        versions = [v.version_number for v in self.version_set.filter(released=False)]
+        versions.sort(key=StrictVersion)
+        return versions
     
     def all_project_issues(self):
         return Issue.objects.filter(project = self)

@@ -67,7 +67,7 @@
         var project_select = document.getElementById('project_select');
         var project = project_select.value;
         
-        $.getJSON("/squash/get_project_versions/" + project + "/", function(result) {
+        $.getJSON("/squash/get_unreleased_project_versions/" + project + "/", function(result) {
             $('#version_select').find('option').remove().end()
             $.each(result, function(version_num) {
                 $("#version_select").append($("<option />").text(result[version_num]));        

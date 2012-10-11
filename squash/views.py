@@ -456,3 +456,16 @@ def get_project_versions(request, project_key):
     except:
         print "Unexpected error:", sys.exc_info()[0]
         raise
+
+@permission_required('squash.add_issue')
+def get_unreleased_project_versions(request, project_key):
+    try:
+        project = Project.objects.get(key=project_key)
+        versions = project.sorted_unreleased_version_numbers()
+        res = HttpResponse(simplejson.dumps(versions, ensure_ascii=False), mimetype='application/json')
+        return res
+    except Project.DoesNotExist:
+        raise Http404
+    except:
+        print "Unexpected error:", sys.exc_info()[0]
+        raise        
