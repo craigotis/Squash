@@ -3,12 +3,14 @@
 {% if project %}
     <b><a href="/squash/projects/">Projects</a> -> <a href="/squash/project/{{project.key}}">{{ project.name }}</a></b><br/><br/>
     {% if project.sorted_versions > 0 %}
+        {% if project.future_issues > 0 %}
+            {% with version=None %}
+                {% include "squash/piece_project_version_issues.html" %}
+            {% endwith %}
+        {% endif %}
         {% for version in project.sorted_versions %}
             {% include "squash/piece_project_version_issues.html" %}
         {% endfor %}
-        {% with version=None %}
-            {% include "squash/piece_project_version_issues.html" %}
-        {% endwith %}       
     {% else %}
         <i>This project has no versions</i>
     {% endif %}

@@ -50,6 +50,7 @@ class Project(models.Model):
     def sorted_versions(self):
         all_versions = [v for v in self.version_set.all()]
         all_versions.sort(key=lambda version: StrictVersion(version.version_number))
+        all_versions.reverse()
         return all_versions
 
     def sorted_version_numbers(self):
