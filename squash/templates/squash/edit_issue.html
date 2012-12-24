@@ -1,89 +1,91 @@
 {% extends "squash/base.html" %}
 {% block content %}
 
-<span><b>Edit Issue:</b></span><br/><br/>
+    <span><b>Edit Issue:</b></span><br/><br/>
 
-{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+    {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
 
-<form id="editIssueForm" action="/squash/editIssue/save/" method="post">
-{% csrf_token %}
+    <form id="editIssueForm" action="/squash/editIssue/save/" method="post">
+        {% csrf_token %}
 
-<input type="hidden" name="project_key" value="{{ issue.project.key }}"/>
-<input type="hidden" name="issue_number" value="{{ issue.issue_number }}"/>
+        <input type="hidden" name="project_key" value="{{ issue.project.key }}"/>
+        <input type="hidden" name="issue_number" value="{{ issue.issue_number }}"/>
 
-<!-- List the projects //-->
-<table>
-    <tr>
-        <td>
-            Project:
-        </td>
-        <td>
-            {{ issue.project.name }}
-        </td>
-    </tr>
-    <tr>
-        <td>
-            Version:
-        </td>
-        <td>
-            <select name="issue_version" id="issue_version_select">
-            </select>
-        </td>
-    </tr>
-    <tr>
-        <td>
-            Name:
-        </td>
-        <td>
-            <input type="text" id="issue_name" name="issue_name" value="{{ issue.name }}" style="width: 300px;"/>
-        </td>
-    </tr>
-    <tr>
-        <td>
-            Description:
-        </td>
-        <td>
-            <textarea name="issue_description" style="width: 300px; height: 180px;">{{ issue.description }}</textarea>
-        </td>
-    </tr>
-</table>
+        <!-- List the projects //-->
+        <table>
+            <tr>
+                <td>
+                    Project:
+                </td>
+                <td>
+                    {{ issue.project.name }}
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Version:
+                </td>
+                <td>
+                    <select name="issue_version" id="issue_version_select">
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Name:
+                </td>
+                <td>
+                    <input type="text" id="issue_name" name="issue_name" value="{{ issue.name }}"
+                           style="width: 300px;"/>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Description:
+                </td>
+                <td>
+                    <textarea name="issue_description"
+                              style="width: 300px; height: 180px;">{{ issue.description }}</textarea>
+                </td>
+            </tr>
+        </table>
 
-<br/>
-    <input type="button" value="Cancel" onclick="javascript:history.back();" class="input_war"/>
-    <input type="button" class="input" value="Save Changes" onclick="javascript:checkSubmit(); return true;"/>
-</form>
+        <br/>
+        <input type="button" value="Cancel" onclick="javascript:history.back();" class="input_war"/>
+        <input type="button" class="input" value="Save Changes" onclick="javascript:checkSubmit(); return true;"/>
+    </form>
 
-<script>
+    <script>
 
-$(function() {
-    var select = $('#issue_version_select');
-    var project = '{{ issue.project.key }}';
-    $.getJSON("/squash/get_project_versions/" + project + "/", function(result) {
-            select.find('option').remove()
-            $.each(result, function(version_num) {
-                var option = $("<option />").text(result[version_num]);
-                if (option.text() === '{{ issue.fix_version.version_number }}') {
-                    option.attr('selected', 'selected');
-                }
-                select.append(option);
+        $(function () {
+            var select = $('#issue_version_select');
+            var project = '{{ issue.project.key }}';
+            $.getJSON("/squash/get_project_versions/" + project + "/", function (result) {
+                select.find('option').remove()
+                $.each(result, function (version_num) {
+                    var option = $("<option />").text(result[version_num]);
+                    if (option.text() === '{{ issue.fix_version.version_number }}') {
+                        option.attr('selected', 'selected');
+                    }
+                    select.append(option);
+                });
+                select.append($("<option />").text("Future"));
             });
-            select.append($("<option />").text("Future"));
         });
-});
 
-function checkSubmit() {
-    var good = true;
-    var issueNameInput = document.getElementById('issue_name');
-    if (isEmpty(issueNameInput.value)) {
-        issueNameInput.style.border = "2px solid #f00";
-        good = false;
-    }
-    
-    if (good) {
-        document.forms['editIssueForm'].submit();
-    }
-}
+        function checkSubmit() {
+            var good = true;
+            var issueNameInput = document.getElementById('issue_name');
+            if (isEmpty(issueNameInput.value)) {
+                issueNameInput.style.border = "2px solid #f00";
+                good = false;
+            }
 
-</script>
+            if (good) {
+                document.forms['editIssueForm'].submit();
+            }
+        }
+
+    </script>
 
 {% endblock %}

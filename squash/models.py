@@ -142,6 +142,9 @@ class Issue(models.Model):
         if (len(state_lookup) > 0):
             return state_lookup[0]
         return "(Invalid state: " + self.state + "))"
+
+    def version_str(self):
+        return str(self.fix_version.version_number)
     
     def __str__(self):
         return ('(No name) ' if is_empty(self.name) else self.name) + ' ' + self.state

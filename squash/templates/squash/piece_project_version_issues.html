@@ -1,28 +1,33 @@
 <table class="styled-table">
     <tr class="header">
         {% if version %}
-            <th colspan=3><a href="/squash/project/{{ project.key }}/">{{ project.name }}</a> - <a href="/squash/project/{{ project.key }}/{{version.version_number}}">{{ version.version_number }} {% if version.scheduled_release_date %}- {{version.scheduled_release_date}}{% endif %}</a></th>
+            <th colspan=3><a href="/squash/project/{{ project.key }}/">{{ project.name }}</a> - <a
+                    href="/squash/project/{{ project.key }}/{{ version.version_number }}">{{ version.version_number }}
+                {% if version.scheduled_release_date %}- {{ version.scheduled_release_date }}{% endif %}</a></th>
         {% else %}
-            <th colspan=3><a href="/squash/project/{{ project.key }}/">{{ project.name }}</a> - <a href="/squash/project/{{ project.key }}/Future">Future</a></th>
+            <th colspan=3><a href="/squash/project/{{ project.key }}/">{{ project.name }}</a> - <a
+                    href="/squash/project/{{ project.key }}/Future">Future</a></th>
         {% endif %}
     </tr>
     {% if version.released %}
-    <tr class="header_success">
-        <th colspan=3>Released on {{ version.release_date }}</th>
-    </tr>
+        <tr class="header_success">
+            <th colspan=3>Released on {{ version.release_date }}</th>
+        </tr>
     {% endif %}
     <tr class="light">
-        <th>ID</th>
-        <th class="light">Name</th>
-        <th class="light">State</th>
+        <th style="width: 5%;">ID</th>
+        <th style="width: 80%;">Name</th>
+        <th style="width: 15%;">State</th>
     </tr>
     {% if version %}
         {% if version.issuesAsFix.count > 0 %}
             {% for issue in version.issues_sorted_by_state %}
                 <tr class="{% cycle 'odd' 'even' %}">
-                    <td><a href="/squash/issue/{{project.key}}/{{ issue.issue_number }}">{{ issue.issue_number }}</a></td>
-                    <td><a href="/squash/issue/{{project.key}}/{{ issue.issue_number }}">{{ issue.name }}</a></td>
-                    <td><a href="/squash/issue/{{project.key}}/{{ issue.issue_number }}">{{ issue.state_str }}</a></td>
+                    <td><a href="/squash/issue/{{ project.key }}/{{ issue.issue_number }}">{{ issue.issue_number }}</a>
+                    </td>
+                    <td><a href="/squash/issue/{{ project.key }}/{{ issue.issue_number }}">{{ issue.name }}</a></td>
+                    <td><a href="/squash/issue/{{ project.key }}/{{ issue.issue_number }}">{{ issue.state_str }}</a>
+                    </td>
                 </tr>
             {% endfor %}
         {% else %}
@@ -34,9 +39,11 @@
         {% if project.future_issues.length > 0 %}
             {% for issue in project.future_issues %}
                 <tr class="{% cycle 'odd' 'even' %}">
-                    <td><a href="/squash/issue/{{project.key}}/{{ issue.issue_number }}">{{ issue.issue_number }}</a></td>
-                    <td><a href="/squash/issue/{{project.key}}/{{ issue.issue_number }}">{{ issue.name }}</a></td>
-                    <td><a href="/squash/issue/{{project.key}}/{{ issue.issue_number }}">{{ issue.state_str }}</a></td>
+                    <td><a href="/squash/issue/{{ project.key }}/{{ issue.issue_number }}">{{ issue.issue_number }}</a>
+                    </td>
+                    <td><a href="/squash/issue/{{ project.key }}/{{ issue.issue_number }}">{{ issue.name }}</a></td>
+                    <td><a href="/squash/issue/{{ project.key }}/{{ issue.issue_number }}">{{ issue.state_str }}</a>
+                    </td>
                 </tr>
             {% endfor %}
         {% else %}

@@ -1,87 +1,100 @@
 {% extends "squash/base.html" %}
 {% block content %}
 
-<b><a href="/squash/projects/">Projects</a> -> <a href="/squash/project/{{project.key}}">{{ project.name }}</a> ->
-{% if version %}
-    <a href="/squash/project/{{project.key}}/{{version.version_number}}">{{ version.version_number }}</a>
-{% else %}
-    <a href="/squash/project/{{project.key}}/Future">Future</a>
-{% endif %}
-
--> <a href="">Issue {{ issue.issue_number }}</a></b><br/><br/>
-
-<!-- List the issue details //-->
-<table>
-    <tr>
-        <td>
-            Project:
-        </td>
-        <td>
-            <a href="/squash/project/{{ project.key }}">{{ project.key }}</a>
-        </td>
-    </tr>
-    <tr>
-        <td>
-            Version:
-        </td>
-        <td>
-            {% if version %}
-                <a href="/squash/project/{{ project.key }}/{{ version.version_number }}">{{ version.version_number }}</a>
-            {% else %}
-                <a href="/squash/project/{{ project.key }}/Future">Future</a>
-            {% endif %}
-        </td>
-    </tr>
-    <tr>
-        <td>
-            Name:
-        </td>
-        <td>
-            {{ issue.name }}
-        </td>
-    </tr>
-    <tr>
-        <td>
-            Description:
-        </td>
-        <td>
-            {% firstof issue.description '<i>(No Description)</i>' %}
-        </td>
-    </tr>
-    <tr>
-        <td>
-            Current State:
-        </td>
-        <td>
-            {{ issue.state_str }}
-        </td>
-    </tr>
-</table>
-
-<table>
-    <tr>
-        {% if issue.state != 'p' %}
-        <td>
-            <a href="/squash/start/{{ project.key }}/{{issue.issue_number}}" class="input">Start Work</a>
-        </td>
+    <b><a href="/squash/projects/">Projects</a> -> <a href="/squash/project/{{ project.key }}">{{ project.name }}</a> ->
+        {% if version %}
+            <a href="/squash/project/{{ project.key }}/{{ version.version_number }}">{{ version.version_number }}</a>
         {% else %}
-            <td>
-            <a href="/squash/stop/{{ project.key }}/{{ issue.issue_number }}" class="input">Stop Work</a>
-        </td>
+            <a href="/squash/project/{{ project.key }}/Future">Future</a>
         {% endif %}
-        <td>
-            <a href="/squash/editIssue/{{ project.key }}/{{ issue.issue_number }}" class="input">Edit Issue</a>
-        </td>
-        <td>
-            <a href="/squash/resolve/{{ project.key }}/{{ issue.issue_number }}" class="input_war">Mark as Resolved</a>
-        </td>
-        <td>
-            <a href="/squash/close/{{ project.key }}/{{ issue.issue_number }}" class="input_war">Mark as Closed</a>
-        </td>
-        <td>
-            <a href="/squash/deleteIssue/{{ project.key }}/{{ issue.issue_number }}" class="input_err">Delete Issue</a>
-        </td>
-    </tr>
-</table>
+
+        -> <a href="">Issue {{ issue.issue_number }}</a></b><br/><br/>
+
+    <!-- List the issue details //-->
+    <table>
+        <tr>
+            <td>
+                Project:
+            </td>
+            <td>
+                <a href="/squash/project/{{ project.key }}">{{ project.key }}</a>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Version:
+            </td>
+            <td>
+                {% if version %}
+                    <a href="/squash/project/{{ project.key }}/{{ version.version_number }}">{{ version.version_number }}</a>
+                {% else %}
+                    <a href="/squash/project/{{ project.key }}/Future">Future</a>
+                {% endif %}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Name:
+            </td>
+            <td>
+                {{ issue.name }}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Description:
+            </td>
+            <td>
+                {% firstof issue.description '<i>(No Description)</i>' %}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Current State:
+            </td>
+            <td>
+                {{ issue.state_str }}
+            </td>
+        </tr>
+    </table>
+
+    <table>
+        <tr>
+            {% if issue.state != 'p' %}
+                <td>
+                    <a href="/squash/start/{{ project.key }}/{{ issue.issue_number }}" class="input">Start Work</a>
+                </td>
+            {% else %}
+                <td>
+                    <a href="/squash/stop/{{ project.key }}/{{ issue.issue_number }}" class="input">Stop Work</a>
+                </td>
+            {% endif %}
+            <td>
+                <a href="/squash/editIssue/{{ project.key }}/{{ issue.issue_number }}" class="input">Edit Issue</a>
+            </td>
+            {% if issue.state != 'r' %}
+                <td>
+                    <a href="/squash/resolve/{{ project.key }}/{{ issue.issue_number }}" class="input_war">Mark as
+                        Resolved</a>
+                </td>
+            {% endif %}
+            {% if issue.state != 'c' %}
+                <td>
+                    <a href="/squash/close/{{ project.key }}/{{ issue.issue_number }}" class="input_war">Mark as
+                        Closed</a>
+                </td>
+            {% endif %}
+            {% if issue.state == 'c' or issue.state == 'r' %}
+                <td>
+                    <a href="/squash/reopen/{{ project.key }}/{{ issue.issue_number }}" class="input_war">Re-Open
+                        Issue</a>
+                </td>
+            {% endif %}
+            <td>
+                <a href="/squash/deleteIssue/{{ project.key }}/{{ issue.issue_number }}" class="input_err">Delete
+                    Issue</a>
+            </td>
+        </tr>
+    </table>
 
 {% endblock %}

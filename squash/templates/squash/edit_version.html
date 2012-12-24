@@ -1,0 +1,58 @@
+{% extends "squash/base.html" %}
+{% block content %}
+
+    <span><b>Edit Version:</b></span><br/><br/>
+
+    {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+
+    <form id="editVersionForm" action="/squash/editVersion/save/" method="post">
+        {% csrf_token %}
+
+        <input type="hidden" name="project_key" value="{{ project.key }}"/>
+        <input type="hidden" name="old_version_number" value="{{ version.version_number }}"/>
+
+        <!-- List the version attributes //-->
+        <table>
+            <tr>
+                <td>
+                    Version Number:
+                </td>
+                <td>
+                    <input type="text" id="version_number" name="version_number" value="{{ version.version_number }}"
+                           style="width: 300px;"/>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Description:
+                </td>
+                <td>
+                    <textarea name="version_description"
+                              style="width: 300px; height: 180px;">{{ version.description }}</textarea>
+                </td>
+            </tr>
+        </table>
+
+        <br/>
+        <input type="button" value="Cancel" onclick="javascript:history.back();" class="input_war"/>
+        <input type="button" class="input" value="Save Changes" onclick="javascript:checkSubmit(); return true;"/>
+    </form>
+
+    <script>
+
+        function checkSubmit() {
+            var good = true;
+            var versionNumberInput = document.getElementById('version_number');
+            if (isEmpty(versionNumberInput.value)) {
+                versionNumberInput.style.border = "2px solid #f00";
+                good = false;
+            }
+
+            if (good) {
+                document.forms['editVersionForm'].submit();
+            }
+        }
+
+    </script>
+
+{% endblock %}

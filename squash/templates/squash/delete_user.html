@@ -1,0 +1,25 @@
+{% extends "squash/base.html" %}
+{% block content %}
+
+{% if success %}
+
+Deletion successful<br/><br/>
+
+<a href="/squash/users/" class="input">To Users</a>
+
+{% else %}
+
+<div class="error" style="width: 300px;">Warning! No projects, or issues created by this User will be deleted.</div>
+
+<form action="/squash/deleteUser/{{ userToDelete.username }}/" method="POST">
+{% csrf_token %}
+
+<a href="/squash/user/{{ userToDelete.username }}/" class="input">No, Cancel</a>
+
+<input type="submit" class="input" value="Delete This User"/>
+
+</form>
+
+{% endif %}
+
+{% endblock %}
