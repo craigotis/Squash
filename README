@@ -1,4 +1,10 @@
 ### Squash - version 0.6.1 ###
+
+Squash is an open-source, lightweight issue tracker written in Python,
+sitting on the Django web framework.
+
+Squash is very much in alpha, but is growing!
+
 #################
 Required Modules:
 
