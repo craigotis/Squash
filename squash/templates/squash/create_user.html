@@ -1,0 +1,54 @@
+{% extends "squash/base.html" %}
+{% block content %}
+
+    <span><b>Create new User:</b></span><br/><br/>
+
+    {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+
+    <form action="/squash/newUser/create/" method="post">
+        {% csrf_token %}
+
+        <!-- List the projects //-->
+        <table>
+            <tr>
+                <td>
+                    Username:
+                </td>
+                <td>
+                    <input type="text" name="username" style="width: 300px;"/>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Permissions:
+                </td>
+                <td>
+                    <table>
+                        <tr>
+                            <td><b>Can Browse:</b></td>
+                            <td><input type="checkbox" name="perm_can_browse" value="booga"/></td>
+                        </tr>
+                        <tr>
+                            <td><b>Create Issues:</b></td>
+                            <td><input type="checkbox" name="perm_add_issue" value="booga"/></td>
+                        </tr>
+                        <tr>
+                            <td><b>Edit Issues:</b></td>
+                            <td><input type="checkbox" name="perm_change_issue" value="booga"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><b>Delete Issues:</b></td>
+                            <td><input type="checkbox" name="perm_delete_issue" value="booga"/>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+
+        <br/>
+        <input type="submit" value="Create New User"/>
+    </form>
+
+{% endblock %}

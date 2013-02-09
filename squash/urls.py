@@ -59,6 +59,9 @@ urlpatterns = patterns('squash.views',
 
     url(r'^user/(?P<uname>\w+)/$', 'edit_user'),
 
+    url(r'^newUser/create/$', 'create_user'),
+    url(r'^newUser/$', 'new_user'),
+
     # Administrative URLs
 
     url(r'^users/$', 'users'),

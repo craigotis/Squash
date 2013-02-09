@@ -508,6 +508,34 @@ def reopen_issue(request, project_key, issue_num):
 
     return redirect('/squash/project/' + proj.key + '/' + issue.fix_version.version_number)
 
+# New User Page
+@permission_required('squash.can_admin')
+def new_user(request):
+    return render_to_response('squash/create_user.html', context_instance=RequestContext(request))
+
+# Create a User
+@permission_required('squash.can_admin')
+def create_user(request):
+    new_username = request.POST['username']
+
+    try:
+        existing_user = User.objects.get(username=new_username)
+        # Username already exists!
+        error_message = "A user with this username already exists."
+        return render_to_response('squash/create_user.html', {'error_message' : error_message}, context_instance=RequestContext(request))
+    except User.DoesNotExist:
+        pass # This is good
+
+    new_user = User()
+    new_user.username = new_username
+    new_user.save()
+
+    applyUserPOSTPermissions(new_user, request)
+    new_user.save()
+
+    # TODO - Add a success message to the response, and add that message to the page
+    return redirect('/squash/users/')
+
 # Edit a User
 @permission_required('squash.can_admin')
 def edit_user(request, uname):
@@ -515,11 +543,8 @@ def edit_user(request, uname):
 
     return render_to_response('squash/edit_user.html', {'user_to_edit': user}, context_instance=RequestContext(request))
 
-# Save a User's permission changes
-@permission_required('squash.can_admin')
-def save_user_permissions(request, uname):
-    user = get_object_or_404(User, username=uname)
 
+def applyUserPOSTPermissions(user, request):
     perm_dict = {'perm_add_issue': 'add_issue',
                  'perm_change_issue': 'change_issue',
                  'perm_delete_issue': 'delete_issue',
@@ -531,6 +556,13 @@ def save_user_permissions(request, uname):
             user.user_permissions.add(perm)
         else:
             user.user_permissions.remove(perm)
+
+# Save a User's permission changes
+@permission_required('squash.can_admin')
+def save_user_permissions(request, uname):
+    user = get_object_or_404(User, username=uname)
+
+    applyUserPOSTPermissions(user, request);
 
     user.save()
 
