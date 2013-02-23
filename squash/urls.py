@@ -26,6 +26,8 @@ urlpatterns = patterns('squash.views',
     url(r'^editIssue/save/$', 'save_issue'),
     url(r'^editIssue/(?P<project_key>\w+)/(?P<issue_num>\d+)/$', 'edit_issue'),
 
+    url(r'^newComment/(?P<project_key>\w+)/(?P<issue_num>\d+)/$', 'create_comment'),
+
     # AJAX URLs
     url(r'^get_project_versions/(?P<project_key>\w+)/$', 'get_project_versions'),
     url(r'^get_unreleased_project_versions/(?P<project_key>\w+)/$', 'get_unreleased_project_versions'),

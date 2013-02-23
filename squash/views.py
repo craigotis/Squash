@@ -12,15 +12,13 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import permission_required
 from django.contrib.auth.models import User, Permission
 
-from datetime import date
+from datetime import date, datetime
 
 import simplejson
 
 from django.conf import settings
 
-from squash.models import Project
-from squash.models import Version
-from squash.models import Issue
+from squash.models import Project, Version, Issue, IssueComment
 
 from squash.utils import get_ref, is_empty
 
@@ -507,6 +505,24 @@ def reopen_issue(request, project_key, issue_num):
     issue.save()
 
     return redirect('/squash/project/' + proj.key + '/' + issue.fix_version.version_number)
+
+# Add a Comment to an Issue
+@permission_required('squash.change_issue')
+def create_comment(request, project_key, issue_num):
+    comment_text = request.POST['issue_comment']
+    
+    proj = get_object_or_404(Project, key=project_key)
+    issue = get_object_or_404(Issue, project=proj, issue_number=issue_num)
+    
+    comment = IssueComment()
+    comment.timeCreated = datetime.now()
+    comment.user = request.user
+    comment.issue = issue
+    comment.text = comment_text
+    
+    comment.save()
+    
+    return redirect('/squash/issue/' + proj.key + '/' + str(issue.issue_number))
 
 # New User Page
 @permission_required('squash.can_admin')

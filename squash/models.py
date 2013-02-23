@@ -118,6 +118,9 @@ class Issue(models.Model):
     state = models.CharField(max_length=1, choices=ISSUE_STATE)
     last_modified = models.DateTimeField(auto_now=True)
     
+    def comments_sorted_by_time(self):
+        return self.comments.order_by('timeCreated')
+    
     def generate_issue_number(self):
         project_issues = self.project.all_project_issues()
         highest_so_far = 1
@@ -148,3 +151,14 @@ class Issue(models.Model):
     
     def __str__(self):
         return ('(No name) ' if is_empty(self.name) else self.name) + ' ' + self.state
+
+class IssueComment(models.Model):
+    # An issue comment should have: 
+    # 1) A link to the issue
+    issue = models.ForeignKey(Issue, related_name="comments")
+    # 2) A timestamp it was created
+    timeCreated = models.DateTimeField()
+    # 3) The user who created it
+    user = models.ForeignKey(User, related_name="comments")
+    # 4) The text of the comment
+    text = models.TextField()

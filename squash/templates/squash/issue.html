@@ -96,5 +96,54 @@
             </td>
         </tr>
     </table>
+    <br/>
+    <table cellpadding=3 cellspacing=0>
+        <tr>
+            <td>
+                <b>Comments for this issue:</b>
+            </td>
+        </tr>
+        {% for comment in issue.comments_sorted_by_time %}
+            <tr>
+                <td style="background-color: #ddd;">
+                    {{ comment.timeCreated }}
+                </td>
+                <td rowspan=2>
+                    {{ comment.text }}
+                </td>
+            </tr>
+            <tr>
+                <td style="background-color: #ddd;">
+                    {{ comment.user.username }}
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+    
+    <form id="newCommentForm" action="/squash/newComment/{{ project.key }}/{{ issue.issue_number }}/" method="post">
+        {% csrf_token %}
+        <table>
+            <tr>
+                <td>
+                    <textarea placeholder="Add a comment to this issue" name="issue_comment" id="issueCommentArea" style="width: 300px; height: 180px;"></textarea><br/>
+                    <input type="button" class="input" style="float: right;" value="Save Comment" onclick="javascript:checkSubmit(); return true;"/>
+                </td>
+            </tr>
+        </table>
+    </form>
+    
+    <script>
+        function checkSubmit() {
+            var issueCommentArea = document.getElementById('issueCommentArea');
+            var good = true;
+            if (isEmpty(issueCommentArea.value)) {
+                issueCommentArea.style.border = "2px solid #f00";
+                good = false;
+            }
 
+            if (good) {
+                document.forms['newCommentForm'].submit();
+            }
+        }
+    </script>
 {% endblock %}
